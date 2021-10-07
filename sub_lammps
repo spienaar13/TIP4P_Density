@@ -1,14 +1,17 @@
 #!/bin/bash -l
+#SBATCH --job-name=TIP4P
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=20
 #SBATCH -t 1:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH -J SPCE_properties
 
-module load intel intel-mpi
 
+#module load intel intel-mpi
+module purge
+module load intel/19.0/64/19.0.5.281 intel-mpi/intel/2019.3/64
 
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-srun $HOME/.local/bin/lmp_tigercpu -sf omp -in lammps.in
+srun /home/spienaar/software/lammps-stable_29Oct2020/build/lmp_tigerCpuD -sf omp -in lammps.in
 
